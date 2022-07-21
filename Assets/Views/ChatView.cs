@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Shared.Messages;
 using TMPro;
 using UnityEngine;
@@ -25,10 +26,12 @@ public class ChatView : MonoBehaviour {
 
     private void SendChatMessage() {
         _chat.SendChatMessage(inputField.text);
+        inputField.text = "";
     }
 
     private void SendChatMessage(string _) {
         _chat.SendChatMessage(inputField.text);
+        inputField.text = "";
     }
 
     public void Init(ChatController chat, UserStateNotify[] users, ChatMessage[] messages) {
@@ -36,7 +39,7 @@ public class ChatView : MonoBehaviour {
         foreach (var user in users) {
             AddUser(user.User, user.IsOnline);
         }
-        foreach (var message in messages) {
+        foreach (var message in messages.Reverse()) {
             AddMessage(message);
         }
     }
