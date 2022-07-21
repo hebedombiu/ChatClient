@@ -46,6 +46,7 @@ public class ChatView : MonoBehaviour {
 
     public void UpdateUserState(ChatUser user, bool isOnline) {
         if (_id2Text.TryGetValue(user.UserId, out var userView)) {
+            userView.text = isOnline ? $"● {user.Name}" : $"{user.Name}";
             userView.fontStyle = isOnline ? FontStyles.Bold : FontStyles.Normal;
         } else {
             AddUser(user, isOnline);
@@ -54,10 +55,10 @@ public class ChatView : MonoBehaviour {
 
     private void AddUser(ChatUser user, bool isOnline) {
         var userView = Instantiate(userPrefab, usersRoot);
-        userView.text = user.Name;
         ColorUtility.TryParseHtmlString(user.Color, out var color);
         userView.color = color;
 
+        userView.text = isOnline ? $"● {user.Name}" : $"{user.Name}";
         userView.fontStyle = isOnline ? FontStyles.Bold : FontStyles.Normal;
 
         _id2Text.Add(user.UserId, userView);
